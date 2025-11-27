@@ -4,11 +4,11 @@ import { Video, allowedResolutions, VideoInputModel } from '../types/video';
 
 const app = Router();
 
-app.get('/videos', (_, res: Response) => {
+app.get('/', (_, res: Response) => {
     res.status(200).json(videos)
 })
 
-app.post('/videos', (req: Request, res: Response) => {
+app.post('/', (req: Request, res: Response) => {
     const {title, author, availableResolutions} = req.body;
     const errors : { message: string, field: string }[] = [];
     if(!title || typeof title !== "string" || title.length > 40){
@@ -46,7 +46,7 @@ app.post('/videos', (req: Request, res: Response) => {
     videos.push(newVideo);
     res.status(201).json(newVideo);
 })
-app.get('/videos/:id', (
+app.get('/:id', (
     req: Request<{id: string}, Video, {}, {}>,
     res: Response<Video | null>,
 ) => {
@@ -58,7 +58,7 @@ app.get('/videos/:id', (
 
 })
 
-app.put('/videos/:id', (
+app.put('/:id', (
     req: Request<{id: string}, {}, VideoInputModel, {}>,
     res: Response
 ) => {
@@ -77,13 +77,13 @@ app.put('/videos/:id', (
     if (availableResolutions && (!Array.isArray(availableResolutions) || availableResolutions.some(r => !allowedResolutions.includes(r)))){
         errorMessages.push({message: "Invalid available resolutions", field: "availableResolutions"});
     }
-    if (minAgeRestriction && (typeof minAgeRestriction !== "number" || minAgeRestriction < 1 || minAgeRestriction > 18)) {
+    if (minAgeRestriction && (minAgeRestriction < 1 || minAgeRestriction > 18)) {
         errorMessages.push({message: "Invalid minAgeRestriction", field: "minAgeRestriction"});
     }
     if (publicationDate && isNaN(Date.parse(publicationDate))){
         errorMessages.push({message: "Invalid publicationDate", field: "publicationDate"});
     }
-    if (errorMessages){
+    if (errorMessages.length > 0){
         return res.status(400).json({ errorMessages });
     }
     video.title = title;
@@ -96,40 +96,13 @@ app.put('/videos/:id', (
 
 })
 
-app.delete('/videos/:id', (req: Request<{id: string}, {}, {}, {}>, res: Response) => {
+app.delete('/:id', (req: Request<{id: string}, {}, {}, {}>, res: Response) => {
     const index = videos.find(v => v.id === +req.params.id)
-    if (index === -1) {
-        return res.sendStatus(404)
-    } else {
-        videos.splice(index, 1);
-        return res.sendStatus(204)
-    }
-
-
+    if (index === -1) return res.sendStatus(404);
+    videos.splice(index, 1);
+    return res.sendStatus(204);
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default app;
 
 
