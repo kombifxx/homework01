@@ -29,8 +29,8 @@ export type Video = {
     availableResolutions: Resolution[]; // массив разрешений
 }
 export type VideoInputModel = {
-    title: string;
-    author: string;
+    title?: string;
+    author?: string;
     availableResolutions?: Resolution[];
     canBeDownloaded?: boolean;
     minAgeRestriction?: number | null;
