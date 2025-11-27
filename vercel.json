@@ -5,5 +5,10 @@
   ],
   "routes": [
     { "src": "/(.*)", "dest": "src/index.ts" }
-  ]
+  ],
+
+  "start": "node dist/src/index.js",
+  "build": "tsc"
+
+
 }
