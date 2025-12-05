@@ -5,8 +5,8 @@ import { testingRouter } from "./routers/testing-router";
 export const setupApp = (app: Express) => {
     app.use(express.json());
 
-    app.use("/hometask_01/api/videos", videosRouter);
-    app.use("/hometask_01/api/testing", testingRouter);
+    app.use("/videos", videosRouter);
+    app.use("/testing", testingRouter);
 
     app.get("/", (req: Request, res: Response) => {
         res.status(200).send("Hello world!");

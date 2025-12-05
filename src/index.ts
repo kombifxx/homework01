@@ -1,8 +1,6 @@
-import { setupApp } from "../setup-app";
-import express from 'express';
+import { app } from "./app";
 
-const app = express();
-setupApp(app);
+
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
