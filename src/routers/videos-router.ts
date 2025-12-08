@@ -68,10 +68,10 @@ app.put('/:id', (
     }
     const { title, author, availableResolutions, canBeDownloaded, minAgeRestriction, publicationDate } = req.body;
     const errorMessages = [];
-    if (!title || typeof title !== "string" || title.length > 40){
+    if (!title || title.length > 40){
         errorMessages.push({message: "Invalid title", field: "title"});
     }
-    if (!author || typeof author !== "string" || author.length > 20){
+    if (!author || author.length > 20){
         errorMessages.push({message: "Invalid author", field: "author"});
     }
     if (availableResolutions && (!Array.isArray(availableResolutions) || availableResolutions.some(r => !allowedResolutions.includes(r)))){
