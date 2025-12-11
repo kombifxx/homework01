@@ -9,7 +9,7 @@ export const setupApp = (app: Express) => {
     app.use("/testing", testingRouter);
 
     app.get("/", (req: Request, res: Response) => {
-        res.status(200).send("Hello world!");
+        res.status(200).send("My first API!");
     });
 
     return app;
